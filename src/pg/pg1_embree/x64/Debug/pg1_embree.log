@@ -1,0 +1,32 @@
+﻿  stdafx.cpp
+  imgui.cpp
+  imgui_demo.cpp
+  imgui_draw.cpp
+  imgui_impl_dx11.cpp
+  imgui_impl_win32.cpp
+  camera.cpp
+  material.cpp
+  matrix3x3.cpp
+  mymath.cpp
+  objloader.cpp
+  raytracer.cpp
+c:\users\asus\documents\projekty\pg2_vsb\src\pg\pg1_embree\raytracer.cpp(344): warning C4305: 'initializing': truncation from 'double' to 'float'
+c:\users\asus\documents\projekty\pg2_vsb\src\pg\pg1_embree\raytracer.cpp(347): warning C4305: 'argument': truncation from 'double' to 'const float'
+c:\users\asus\documents\projekty\pg2_vsb\src\pg\pg1_embree\raytracer.cpp(482): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\asus\documents\projekty\pg2_vsb\src\pg\pg1_embree\raytracer.cpp(483): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  pg1_embree.cpp
+  simpleguidx11.cpp
+  background.cpp
+  structs.cpp
+  surface.cpp
+  texture.cpp
+  triangle.cpp
+  tutorials.cpp
+  utils.cpp
+  Generating Code...
+c:\users\asus\documents\projekty\pg2_vsb\src\pg\pg1_embree\material.cpp(103): warning C4715: 'Material::doDiffuse': not all control paths return a value
+  Compiling...
+  vector3.cpp
+  vertex.cpp
+  Generating Code...
+  pg1_embree.vcxproj -> C:\Users\Asus\Documents\Projekty\PG2_VSB\src\pg\x64\Debug\pg1_embree.exe
