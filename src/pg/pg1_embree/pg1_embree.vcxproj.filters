@@ -105,6 +105,9 @@
     <ClInclude Include="background.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="optixtutorial.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -176,5 +179,8 @@
     <ClCompile Include="background.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CudaCompile Include="optixtutorial.cu" />
   </ItemGroup>
 </Project>

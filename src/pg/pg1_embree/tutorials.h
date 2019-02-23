@@ -9,5 +9,6 @@ int tutorial_3( const std::string file_name, const char * config = "threads=0,ve
 int ship_model(const std::string file_name, const char * config = "threads=0,verbose=0");
 int path_tracer(const std::string file_name, const char * config = "threads=0,verbose=0");
 int geosphere(const std::string file_name, const char * config = "threads=0,verbose=0");
+int tutorial_7();
 
 #endif

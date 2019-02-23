@@ -54,6 +54,7 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
+    <Import Project="$(VCTargetsPath)\BuildCustomizations\CUDA 10.0.props" />
   </ImportGroup>
   <ImportGroup Label="Shared">
   </ImportGroup>
@@ -75,8 +76,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>../../libs/embree/include;../../libs/imgui/include;../../libs/freeimage/include;$(IncludePath)</IncludePath>
-    <LibraryPath>../../libs/embree/lib;../../libs/freeimage/lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>../../libs/embree/include;../../libs/imgui/include;../../libs/freeimage/include;C:/ProgramData/NVIDIA/OptiX SDK 6.0.0/include;C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v10.0/include;$(IncludePath)</IncludePath>
+    <LibraryPath>../../libs/embree/lib;../../libs/freeimage/lib;C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v10.0/lib/x64;C:/ProgramData/NVIDIA/OptiX SDK 6.0.0/lib64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -115,7 +116,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>embree3.lib;D3d11.lib;d3dcompiler.lib;FreeImaged.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>embree3.lib;D3d11.lib;d3dcompiler.lib;FreeImaged.lib;%(AdditionalDependencies);optix.6.0.0.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -171,6 +172,7 @@
     <ClInclude Include="matrix3x3.h" />
     <ClInclude Include="mymath.h" />
     <ClInclude Include="objloader.h" />
+    <ClInclude Include="optixtutorial.h" />
     <ClInclude Include="raytracer.h" />
     <ClInclude Include="simpleguidx11.h" />
     <ClInclude Include="background.h" />
@@ -215,7 +217,17 @@
     <ClCompile Include="vector3.cpp" />
     <ClCompile Include="vertex.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <CudaCompile Include="optixtutorial.cu">
+      <CompileOut Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(Filename).ptx</CompileOut>
+      <NvccCompilation Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">ptx</NvccCompilation>
+      <TargetMachinePlatform Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">64</TargetMachinePlatform>
+      <CodeGeneration Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">compute_50,sm_50</CodeGeneration>
+      <GPUDebugInfo Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</GPUDebugInfo>
+    </CudaCompile>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="$(VCTargetsPath)\BuildCustomizations\CUDA 10.0.targets" />
   </ImportGroup>
 </Project>
