@@ -17,6 +17,8 @@ public:
 
 	int InitDeviceAndScene();
 	int ReleaseDeviceAndScene();
+	int InitGraph();
+	int GetImage(BYTE * buffer) override;
 
 	void LoadScene( const std::string file_name );
 	
@@ -24,7 +26,9 @@ public:
 
 	int Ui();
 
-private:	
+private:
+	RTcontext context_{ 0 };
+	RTbuffer output_buffer_{ 0 };
 	std::vector<Surface *> surfaces_;
 	std::vector<Material *> materials_;			
 
