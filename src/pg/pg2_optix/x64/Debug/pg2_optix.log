@@ -1,0 +1,30 @@
+﻿  
+  C:\Users\Asus\Documents\Projekty\pg2\PG2_VSB\src\pg\pg2_optix>"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.0\bin\nvcc.exe" -ccbin "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.15.26726\bin\HostX86\x64" -x cu  -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.0\include" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.0\include"     --keep-dir x64\Debug -maxrregcount=0  --machine 64 -ptx   -o optixtutorial.ptx "C:\Users\Asus\Documents\Projekty\pg2\PG2_VSB\src\pg\pg2_optix\optixtutorial.cu" -clean 
+  optixtutorial.cu
+  Compiling CUDA source file optixtutorial.cu...
+  
+  C:\Users\Asus\Documents\Projekty\pg2\PG2_VSB\src\pg\pg2_optix>"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.0\bin\nvcc.exe" -gencode=arch=compute_50,code=\"sm_50,compute_50\" --use-local-env -ccbin "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.15.26726\bin\HostX86\x64" -x cu  -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.0\include" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.0\include"     --keep-dir x64\Debug -maxrregcount=0  --machine 64 -ptx -cudart static  -o optixtutorial.ptx "C:\Users\Asus\Documents\Projekty\pg2\PG2_VSB\src\pg\pg2_optix\optixtutorial.cu" 
+  optixtutorial.cu
+  pch.cpp
+  imgui.cpp
+  imgui_demo.cpp
+  imgui_draw.cpp
+  imgui_impl_dx11.cpp
+  imgui_impl_win32.cpp
+  material.cpp
+  matrix3x3.cpp
+  mymath.cpp
+  objloader.cpp
+  pg2_optix.cpp
+  raytracer.cpp
+  simpleguidx11.cpp
+  structs.cpp
+  surface.cpp
+  texture.cpp
+  triangle.cpp
+  tutorials.cpp
+  utils.cpp
+  vector3.cpp
+  vertex.cpp
+  Generating Code...
+  pg2_optix.vcxproj -> C:\Users\Asus\Documents\Projekty\pg2\PG2_VSB\src\pg\x64\Debug\pg2_optix.exe
