@@ -4,11 +4,15 @@
 #include "tutorials.h"
 #include "mymath.h"
 #include "omp.h"
+#include "Camera.h"
 
-Raytracer::Raytracer(const int width, const int height) : SimpleGuiDX11(width, height)
+Raytracer::Raytracer(const int width, const int height, const float fov_y, const Vector3 view_from, const Vector3 view_at) : SimpleGuiDX11(width, height)
 {
 	InitDeviceAndScene();
+	camera = Camera(width, height, fov_y, view_from, view_at);
+	fov = fov_y;
 }
+
 
 Raytracer::~Raytracer()
 {
@@ -85,22 +89,33 @@ int Raytracer::InitGraph()
 	RTgeometrytriangles geometry_triangles;
 	error_handler(rtGeometryTrianglesCreate(context_, &geometry_triangles));
 	error_handler(rtGeometryTrianglesSetPrimitiveCount(geometry_triangles, 1));
-	RTbuffer vertex_buffer;
-	error_handler(rtBufferCreate(context_, RT_BUFFER_INPUT, &vertex_buffer));
-	error_handler(rtBufferSetFormat(vertex_buffer, RT_FORMAT_FLOAT3));
-	error_handler(rtBufferSetSize1D(vertex_buffer, 3));
+	RTvariable normals;
+	rtContextDeclareVariable(context_, "normal_buffer", &normals);
+	RTbuffer normal_buffer;
+	error_handler(rtBufferCreate(context_, RT_BUFFER_INPUT, &normal_buffer));
+	error_handler(rtBufferSetFormat(normal_buffer, RT_FORMAT_FLOAT3));
+	error_handler(rtBufferSetSize1D(normal_buffer, 3));
 	{
 		optix::float3 * data = nullptr;
-		error_handler(rtBufferMap(vertex_buffer, (void**)(&data)));
+		error_handler(rtBufferMap(normal_buffer, (void**)(&data)));
 		data[0].x = 0.0f; data[0].y = 0.0f; data[0].z = 0.0f;
 		data[1].x = 200.0f; data[1].y = 0.0f; data[1].z = 0.0f;
 		data[2].x = 0.0f; data[2].y = 150.0f; data[2].z = 0.0f;
-		error_handler(rtBufferUnmap(vertex_buffer));
+		error_handler(rtBufferUnmap(normal_buffer));
 		data = nullptr;
 	}
-	error_handler(rtGeometryTrianglesSetVertices(geometry_triangles, 3, vertex_buffer, 0, sizeof(optix::float3), RT_FORMAT_FLOAT3));
+
+	rtBufferValidate(normal_buffer);
+	rtVariableSetObject(normals, normal_buffer);
+	error_handler(rtGeometryTrianglesSetVertices(geometry_triangles, 3, normal_buffer, 0, sizeof(optix::float3), RT_FORMAT_FLOAT3));
 	//rtGeometryTrianglesSetTriangles();
 	error_handler(rtGeometryTrianglesValidate(geometry_triangles));
+
+	RTprogram attribute_program;
+	rtProgramCreateFromPTXFile(context_, "optixtutorial.ptx", "attribute_program", &attribute_program);
+	rtProgramValidate(attribute_program);
+	rtGeometryTrianglesSetAttributeProgram(geometry_triangles, attribute_program);
+	rtGeometryTrianglesValidate(geometry_triangles);
 
 	// material
 	RTmaterial material;
@@ -139,6 +154,17 @@ int Raytracer::InitGraph()
 	RTvariable top_object;
 	error_handler(rtContextDeclareVariable(context_, "top_object", &top_object));
 	error_handler(rtVariableSetObject(top_object, geometry_group));
+
+
+	RTvariable material_indices;
+	rtContextDeclareVariable(context_, "material_index_buffer",
+		&material_indices);
+	RTbuffer material_index_buffer;
+	rtBufferCreate(context_, RT_BUFFER_INPUT, &material_index_buffer
+	);
+	rtBufferSetFormat(material_index_buffer, RT_FORMAT_UNSIGNED_BYTE
+	);
+	rtBufferSetSize1D(material_index_buffer, 1); // to bbe used, must be larger than 1
 
 	// group
 
