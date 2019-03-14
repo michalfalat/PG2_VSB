@@ -43,6 +43,9 @@ public:
 	*/
 	void set( const int row, const int column, const float value );
 
+
+	float* data();
+
 	//! Vrátí zadaný prvek matice.
 	/*!
 	\param row øádek matice.

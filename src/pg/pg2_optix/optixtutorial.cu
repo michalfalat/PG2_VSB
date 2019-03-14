@@ -62,9 +62,13 @@ RT_PROGRAM void primary_ray( void )
 
 RT_PROGRAM void closest_hit( void )
 {
-	/*const optix::float3 normal = optix::faceforward(attribs.normal, -ray.direction, attribs.normal);
-	ray_data.result = (normal + optix::make_float3(1.0f, 1.0f, 1.0f)) * 0.5f;*/
-	//ray_data.result = optix::make_float3( barycentrics.x, barycentrics.y, 0.0f );
+	const unsigned int index = rtGetPrimitiveIndex();
+	const optix::float3 n0 = normal_buffer[index * 3 + 0];
+	const optix::float3 n1 = normal_buffer[index * 3 + 1];
+	const optix::float3 n2 = normal_buffer[index * 3 + 2];
+	optix::float3 normal = optix::normalize(n1 * barycentrics.x + n2 * barycentrics.y + n0 * (1.0f - barycentrics.x - barycentrics.y));
+
+	ray_data.result = optix::make_float3((normal.x + 1) / 2, (normal.y + 1) / 2, (normal.z + 1) / 2);
 }
 
 /* may access variables declared with the rtPayload semantic in the same way as closest-hit and any-hit programs */

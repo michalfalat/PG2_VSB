@@ -180,6 +180,7 @@ int tutorial_1()
 int tutorial_2(const std::string file_name)
 {
 	Raytracer raytracer(640, 480, deg2rad(45.0), Vector3(175, -140, 130), Vector3(0, 0, 35));
+	raytracer.InitDeviceAndScene();
 	raytracer.LoadScene(file_name);
 	raytracer.MainLoop();
 

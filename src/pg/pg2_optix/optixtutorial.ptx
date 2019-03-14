@@ -275,9 +275,70 @@ BB0_3:
 
 )
 {
+	.reg .f32 	%f<37>;
+	.reg .b32 	%r<11>;
+	.reg .b64 	%rd<20>;
 
 
-
+	// inline asm
+	call (%r1), _rt_get_primitive_index, ();
+	// inline asm
+	mul.lo.s32 	%r8, %r1, 3;
+	cvt.u64.u32	%rd3, %r8;
+	mov.u64 	%rd19, normal_buffer;
+	cvta.global.u64 	%rd2, %rd19;
+	mov.u32 	%r6, 1;
+	mov.u32 	%r7, 12;
+	mov.u64 	%rd18, 0;
+	// inline asm
+	call (%rd1), _rt_buffer_get_64, (%rd2, %r6, %r7, %rd3, %rd18, %rd18, %rd18);
+	// inline asm
+	ld.f32 	%f1, [%rd1+8];
+	ld.f32 	%f2, [%rd1+4];
+	ld.f32 	%f3, [%rd1];
+	add.s32 	%r9, %r8, 1;
+	cvt.u64.u32	%rd9, %r9;
+	// inline asm
+	call (%rd7), _rt_buffer_get_64, (%rd2, %r6, %r7, %rd9, %rd18, %rd18, %rd18);
+	// inline asm
+	ld.f32 	%f4, [%rd7+8];
+	ld.f32 	%f5, [%rd7+4];
+	ld.f32 	%f6, [%rd7];
+	add.s32 	%r10, %r8, 2;
+	cvt.u64.u32	%rd15, %r10;
+	// inline asm
+	call (%rd13), _rt_buffer_get_64, (%rd2, %r6, %r7, %rd15, %rd18, %rd18, %rd18);
+	// inline asm
+	ld.f32 	%f7, [%rd13+8];
+	ld.f32 	%f8, [%rd13+4];
+	ld.f32 	%f9, [%rd13];
+	ld.global.v2.f32 	{%f10, %f11}, [barycentrics];
+	mul.f32 	%f14, %f9, %f11;
+	mul.f32 	%f15, %f8, %f11;
+	mul.f32 	%f16, %f7, %f11;
+	fma.rn.f32 	%f17, %f6, %f10, %f14;
+	fma.rn.f32 	%f18, %f5, %f10, %f15;
+	fma.rn.f32 	%f19, %f4, %f10, %f16;
+	mov.f32 	%f20, 0f3F800000;
+	sub.f32 	%f21, %f20, %f10;
+	sub.f32 	%f22, %f21, %f11;
+	fma.rn.f32 	%f23, %f3, %f22, %f17;
+	fma.rn.f32 	%f24, %f2, %f22, %f18;
+	fma.rn.f32 	%f25, %f1, %f22, %f19;
+	mul.f32 	%f26, %f24, %f24;
+	fma.rn.f32 	%f27, %f23, %f23, %f26;
+	fma.rn.f32 	%f28, %f25, %f25, %f27;
+	sqrt.rn.f32 	%f29, %f28;
+	rcp.rn.f32 	%f30, %f29;
+	fma.rn.f32 	%f31, %f30, %f23, 0f3F800000;
+	mul.f32 	%f32, %f31, 0f3F000000;
+	fma.rn.f32 	%f33, %f30, %f24, 0f3F800000;
+	mul.f32 	%f34, %f33, 0f3F000000;
+	fma.rn.f32 	%f35, %f30, %f25, 0f3F800000;
+	mul.f32 	%f36, %f35, 0f3F000000;
+	st.global.f32 	[ray_data], %f32;
+	st.global.f32 	[ray_data+4], %f34;
+	st.global.f32 	[ray_data+8], %f36;
 	ret;
 }
 

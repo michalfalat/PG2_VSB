@@ -12,10 +12,7 @@ Camera::Camera(const int width, const int height, const float fov_y,
 	view_from_ = view_from;
 	view_at_ = view_at;
 
-	// TODO compute focal lenght based on the vertical field of view and the camera resolution
 	f_y_ = height / (2 * tanf(fov_y * 0.5f));
-
-	// TODO build M_c_w_ matrix	
 
 	recalculateMcw();
 }
