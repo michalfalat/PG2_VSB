@@ -33,10 +33,16 @@ public:
 	void updateViewAt(const Vector3 view_at);
 	void updateViewAtAndViewFrom(const Vector3 view_at, const Vector3 view_from);
 	void updateFov(const float fov_y);
+	void moveForward(double step);
+	void moveRight(double step);
+	void rotateRight(double step);
+	void rotateUp(double step);
+	void rollRight(double step);
 private:
 	int width_{ 640 }; // image width (px)
 	int height_{ 480 };  // image height (px)
 	float fov_y_{ 0.785f }; // vertical field of view (rad)
+	bool mcwUpdate = true;
 
 	Vector3 view_from_; // ray origin or eye or O
 	Vector3 view_at_; // target T

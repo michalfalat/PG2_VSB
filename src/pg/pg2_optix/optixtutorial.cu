@@ -24,7 +24,7 @@ RT_PROGRAM void primary_ray( void )
 {
 	if ( launch_index.x == 0 && launch_index.y % 100 == 0 )
 	{
-		rtPrintf("(%u, %u)\n", launch_index.x, launch_index.y);
+		//rtPrintf("(%u, %u)\n", launch_index.x, launch_index.y);
 	}
 
 	const optix::float3 d_c = make_float3(launch_index.x -

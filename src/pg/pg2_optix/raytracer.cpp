@@ -11,6 +11,7 @@ Raytracer::Raytracer(const int width, const int height, const float fov_y, const
 	InitDeviceAndScene();
 	camera = Camera(width, height, fov_y, view_from, view_at);
 	fov = fov_y;
+	speed = 3;
 }
 
 
@@ -373,6 +374,7 @@ int Raytracer::Ui()
 	// we use a Begin/End pair to created a named window
 	ImGui::Begin("Ray Tracer Params");
 
+	ImGui::SliderInt("'Speed", &speed, 0, 10);
 	ImGui::Text("Surfaces = %d", surfaces_.size());
 	ImGui::Text("Materials = %d", materials_.size());
 	ImGui::Separator();
@@ -393,17 +395,34 @@ int Raytracer::Ui()
 	ImGui::Text("counter = %d", counter);
 
 	ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+
+	bool arrowUpPressed = GetKeyState(VK_UP) & 0x8000 ? true : false;
+	bool arrowDownPressed = GetKeyState(VK_DOWN) & 0x8000 ? true : false;
+	bool arrowLeftPressed = GetKeyState(VK_LEFT) & 0x8000 ? true : false;
+	bool arrowRightPressed = GetKeyState(VK_RIGHT) & 0x8000 ? true : false;
+	bool wPressed = GetKeyState('W') & 0x8000 ? true : false;
+	bool aPressed = GetKeyState('A') & 0x8000 ? true : false;
+	bool sPressed = GetKeyState('S') & 0x8000 ? true : false;
+	bool dPressed = GetKeyState('D') & 0x8000 ? true : false;
+	bool zPressed = GetKeyState('Z') & 0x8000 ? true : false;
+	bool cPressed = GetKeyState('C') & 0x8000 ? true : false;
+
+	float time = ImGui::GetIO().DeltaTime * 60;
+
+	double frameStep = speed * time;
+
+	if (arrowUpPressed) camera.moveForward(frameStep);
+	if (arrowDownPressed) camera.moveForward(-frameStep);
+	if (arrowRightPressed) camera.moveRight(frameStep);
+	if (arrowLeftPressed) camera.moveRight(-frameStep);
+	if (dPressed) camera.rotateRight(frameStep);
+	if (aPressed) camera.rotateRight(-frameStep);
+	if (sPressed) camera.rotateUp(-frameStep);
+	if (wPressed) camera.rotateUp(frameStep);
+	if (cPressed) camera.rollRight(frameStep);
+	if (zPressed) camera.rollRight(-frameStep);
 	ImGui::End();
 
-	// 3. Show another simple window.
-	/*if ( show_another_window )
-	{
-	ImGui::Begin( "Another Window", &show_another_window );   // Pass a pointer to our bool variable (the window will have a closing button that will clear the bool when clicked)
-	ImGui::Text( "Hello from another window!" );
-	if ( ImGui::Button( "Close Me" ) )
-	show_another_window = false;
-	ImGui::End();
-	}*/
 
 	return 0;
 }
