@@ -109,7 +109,7 @@ void SimpleGuiDX11::Producer()
 	{
 		auto t1 = std::chrono::high_resolution_clock::now();
 		std::chrono::duration<float> dt = t1 - t0;
-		printf( "# %d in %0.1f ms\n", frame, dt.count() * 1e+3 );
+		// printf( "# %d in %0.1f ms\n", frame, dt.count() * 1e+3 );
 		t += dt.count();
 		t0 = t1;
 

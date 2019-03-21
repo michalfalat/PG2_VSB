@@ -42,5 +42,6 @@ private:
 
 	Camera camera;
 	float fov;
+	int speed;
 	bool unify_normals_{ true };
 };

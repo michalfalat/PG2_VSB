@@ -60,7 +60,47 @@ void Camera::updateViewAtAndViewFrom(const Vector3 view_at, const Vector3 view_f
 	recalculateMcw();
 }
 
+void Camera::moveForward(double frameStep) {
+	view_at_ = view_at_ - frameStep * basis_z;
+	view_from_ = view_from_ - frameStep * basis_z;
+	mcwUpdate = true;
+}
+
+void Camera::moveRight(double frameStep) {
+	view_at_ = view_at_ + frameStep * basis_x;
+	view_from_ = view_from_ + frameStep * basis_x;
+	mcwUpdate = true;
+}
+void Camera::rotateRight(double frameStep) {
+	double forwardL = (view_at_ - view_from_).L2Norm();
+	Vector3 newViewAt = view_at_ + basis_x * frameStep;
+	double distanceRatio = forwardL / (newViewAt - view_from_).L2Norm();
+	Vector3 newVector = (newViewAt - view_from_);
+	newVector *= distanceRatio;
+	newViewAt = view_from_ + newVector;
+	view_at_ = newViewAt;
+	recalculateMcw();
+	mcwUpdate = true;
+}
+
+void Camera::rotateUp(double frameStep) {
+	Vector3 newViewAt = view_at_ + basis_y * frameStep;
+	view_at_ = newViewAt;
+	recalculateMcw();
+	mcwUpdate = true;
+}
+
+void Camera::rollRight(double frameStep) {
+	up_ = basis_y + 0.01 * frameStep * basis_x;
+	printf("%f %f %f \n", up_.x, up_.y, up_.z);
+	recalculateMcw();
+	mcwUpdate = true;
+}
+
 void Camera::recalculateMcw() {
+
+
+	if (!mcwUpdate) return;
 
 	basis_z = view_from_ - view_at_;
 	basis_z.Normalize();
@@ -74,5 +114,6 @@ void Camera::recalculateMcw() {
 	up_ = basis_y;
 
 	M_c_w_ = Matrix3x3(basis_x, basis_y, basis_z);
+	mcwUpdate = false;
 }
 
