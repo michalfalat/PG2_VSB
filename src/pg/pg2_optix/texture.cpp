@@ -140,3 +140,7 @@ int Texture::height() const
 {
 	return height_;
 }
+
+BYTE * Texture::getData() {
+	return data_;
+}

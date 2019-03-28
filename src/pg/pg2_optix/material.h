@@ -121,6 +121,7 @@ public:
 	float metallicness; /*!< Koeficient kovovosti. */
 	float reflectivity; /*!< Koeficient odrazivosti. */
 	float ior; /*!< Index lomu. */
+	int matIndex;
 
 	static const char kDiffuseMapSlot; /*!< Èíslo slotu difuzní textury. */
 	static const char kSpecularMapSlot; /*!< Èíslo slotu spekulární textury. */

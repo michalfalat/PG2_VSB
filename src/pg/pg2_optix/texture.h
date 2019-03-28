@@ -23,6 +23,8 @@ public:
 	int width() const;
 	int height() const;
 
+	BYTE * getData();
+
 private:	
 	int width_{ 0 }; // image width (px)
 	int height_{ 0 }; // image height (px)

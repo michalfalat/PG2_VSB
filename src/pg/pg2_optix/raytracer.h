@@ -44,4 +44,6 @@ private:
 	float fov;
 	int speed;
 	bool unify_normals_{ true };
+
+	void error_handler(RTresult code);
 };
