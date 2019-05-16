@@ -253,7 +253,7 @@ void Raytracer::LoadScene(const std::string file_name)
 			error_handler(rtBufferMap(texture_buffer, (void**)(&textureData)));
 
 			for (int i = 0; i < (texture->height() * texture->width()); i++) {
-				textureData[i] = optix::make_float4(texture->getData()[3 * i + 2] / 255.0f, texture->getData()[3 * i + 1] / 255.0f, texture->getData()[3 * i] / 255.0f, 1);
+				textureData[i] = optix::make_float4(texture->getData()[3 * i] / 255.0f, texture->getData()[3 * i + 1] / 255.0f, texture->getData()[3 * i + 2] / 255.0f, 1);
 			}
 
 			rtTextureSamplerSetReadMode(textureSampler, RT_TEXTURE_READ_NORMALIZED_FLOAT);
